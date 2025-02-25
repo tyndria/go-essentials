@@ -7,5 +7,5 @@ import (
 )
 
 func TestEvenEndedNumbersCount(t* testing.T) {
-	require.Equal(t, EvenEndedNumbersCount(), 3184963)
+	require.Equal(t, 3184963, EvenEndedNumbersCount())
 }
