@@ -34,12 +34,11 @@ func TestContentType(t *testing.T) {
 
 			if test.shouldError {
 				require.Error(t, err)
-				require.Equal(t, actualContentType, "")
+				require.Equal(t, "", actualContentType)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, actualContentType, test.expectedContentType)
+				require.Equal(t, test.expectedContentType, actualContentType)
 			}
 		})
 	}
-
 }
