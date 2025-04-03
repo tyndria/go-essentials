@@ -4,16 +4,15 @@ import (
 	"fmt"
 )
 
-
 type Square struct {
-	X int
-	Y int
+	X      int
+	Y      int
 	Length int
 }
 
 func NewSquare(x, y, length int) (*Square, error) {
 	if length < 0 {
-		return nil, fmt.Errorf("Length should be non-negative: input length is %d", length)
+		return nil, fmt.Errorf("length should be non-negative: input length is %d", length)
 	}
 
 	square := Square{x, y, length}

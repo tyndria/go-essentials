@@ -2,32 +2,34 @@ package exercises
 
 import (
 	"fmt"
+	"log"
 	"os"
-	"strconv"
 
 	"github.com/pkg/errors"
 )
 
 func KillServer(pidFile string) error {
-	pidData, err := os.ReadFile(pidFile)
+	file, err := os.Open(pidFile)
+
 	if err != nil {
 		return errors.Wrap(err, "can't open pid file")
 	}
 
-	fileInfo, err := os.Stat(pidFile)
-	if err != nil {
-		return errors.Wrap(err, "can't check file size")
-	}
+	defer file.Close()
 
-	if fileInfo.Size() == 0 {
-		return errors.New("file is empty")
-	}
+	defer func() {
+		if err = os.Remove(pidFile); err != nil {
+			// We could continue running the program even if we can't remove the file
+			log.Printf("can't remove pid file %v", err)
+		}
+	}()
 
-	pid, err := strconv.Atoi(string(pidData))
-	if err != nil {
-		return errors.Wrap(err, "can't convert file data to int")
+	var pid int
+	if _, err := fmt.Fscanf(file, "%d", &pid); err != nil {
+		return errors.Wrap(err, "can't parse pid file data")
 	}
 
 	fmt.Printf("killing server with pid = %d\n", pid)
+
 	return nil
 }
