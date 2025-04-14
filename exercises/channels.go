@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func Channels(urls []string) {
+func ContentTypesOverChannel(urls []string) {
 	ch := make(chan string)
 
 	for _, url := range urls {
